@@ -32,3 +32,7 @@ const kFormAlternateGreen = Color(0xfff3f9f2);
 const kLightGrey = Color(0xffF1F1F1);
 
 const kBgColor = Color(0xffFBFAFF);
+
+const kSizedBox = SizedBox(
+  height: kDefaultPadding,
+);

@@ -19,7 +19,7 @@ class RegisterApi {
     final uri = Uri.parse(url);
     print("phone $mobile");
     // print("country $countryCode");
-    Map<String, dynamic> body = {"phone": mobile, "account_type": "user"};
+    Map<String, dynamic> body = {"phone": mobile, "account_type": "farmer"};
     try {
       http.Response response = await http
           .post(
@@ -74,7 +74,7 @@ class RegisterApi {
     final uri = Uri.parse(url);
     print("phone $mobile");
     print("country $countryCode");
-    final fcmToken = "";
+    final fcmToken = "farmerfcmtoken";
     print("---------------------fcm-------------------");
     print("fcm $fcmToken ");
     print("---------------------fcm-------------------");
