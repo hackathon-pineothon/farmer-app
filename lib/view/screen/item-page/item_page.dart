@@ -92,7 +92,7 @@ class _ItemPageState extends State<ItemPage> {
                     ),
                   ),
                   Text(
-                    "1000rs/kg",
+                    "11rs/kg",
                     style: TextStyle(
                         color: kGrey,
                         fontSize: 16,
@@ -131,7 +131,7 @@ class _ItemPageState extends State<ItemPage> {
                             borderRadius: BorderRadius.circular(10)),
                         alignment: Alignment.center,
                         child: Text(
-                          "100",
+                          i < 7 ? "11" : "10",
                           style: TextStyle(
                             color: i < 7 ? kGreen : kPrimaryTextColor,
                             fontWeight: FontWeight.bold,

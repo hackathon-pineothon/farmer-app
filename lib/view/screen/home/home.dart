@@ -1,9 +1,11 @@
 import 'package:farmer_app/view/constants/constats.dart';
-import 'package:farmer_app/view/screen/add-item/add_item.dart';
+import 'package:farmer_app/view/screen/add-item/add_item_one.dart';
 import 'package:farmer_app/view/screen/home/appbar.dart';
 import 'package:farmer_app/view/screen/home/itme_container.dart';
 import 'package:farmer_app/view/screen/item-page/item_page.dart';
+import 'package:farmer_app/view/screen/notification/notification.dart';
 import 'package:farmer_app/view/widgets/app_drawer.dart';
+import 'package:farmer_app/view/widgets/bottom_navigationbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -24,33 +26,50 @@ class _HomePageState extends State<HomePage> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
+      bottomNavigationBar: BottomNavigationBarCustom(currentIndex: 0),
       key: _scaffoldState,
       drawer: AppDrawer(),
       appBar: appBarCustom(
-        prefixWidget: Center(
-          child: InkWell(
-            onTap: () {
-              _scaffoldState.currentState!.openDrawer();
-            },
-            child: Icon(
-              Icons.menu,
-              color: kPrimaryTextColor,
-              size: 22,
+          prefixWidget: Center(
+            child: InkWell(
+              onTap: () {
+                _scaffoldState.currentState!.openDrawer();
+              },
+              child: Icon(
+                Icons.menu,
+                color: kPrimaryTextColor,
+                size: 22,
+              ),
             ),
           ),
-        ),
-        title: "Welcome",
-        bgColor: kWhite,
-        widgetColor: kPrimaryTextColor,
-        suffixWidget: Icon(
-          Icons.chat_rounded,
-          color: kPrimaryTextColor,
-          size: 22,
-        ),
-      ),
+          title: "Welcome",
+          bgColor: kWhite,
+          widgetColor: kPrimaryTextColor,
+          suffixWidget: Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  Get.to(NotificationPage());
+                },
+                child: Icon(
+                  Icons.notifications,
+                  color: kPrimaryTextColor,
+                  size: 22,
+                ),
+              ),
+              const SizedBox(
+                width: kDefaultPadding,
+              ),
+              Icon(
+                Icons.chat_rounded,
+                color: kPrimaryTextColor,
+                size: 22,
+              ),
+            ],
+          )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(AddItem());
+          Get.to(AddPostPage());
         },
         backgroundColor: kPrimaryTextColor,
         child: Icon(
@@ -143,9 +162,9 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: ItemContainer(
                         width: size.width / 2 - kDefaultPadding * 1.5,
-                        name: "orange",
+                        name: "banana",
                         price: 200,
-                        imgUrl: "assets/png/cauliflower.png",
+                        imgUrl: "assets/png/banana.png",
                         totalLeft: 30),
                   )
               ],
