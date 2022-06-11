@@ -1,4 +1,5 @@
 import 'package:farmer_app/view/constants/constats.dart';
+import 'package:farmer_app/view/screen/add-item/add_item.dart';
 import 'package:farmer_app/view/screen/home/itme_container.dart';
 import 'package:farmer_app/view/screen/item-page/item_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +21,17 @@ class _HomePageState extends State<HomePage> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(AddItem());
+        },
+        backgroundColor: kPrimaryTextColor,
+        child: Icon(
+          Icons.add,
+          color: kWhite,
+          size: 30,
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
@@ -31,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(10),
                 child: SizedBox(
                   width: double.maxFinite,
-                  height: 100,
+                  height: 120,
                   child: Image.network(
                     "https://st.depositphotos.com/1004077/4652/v/950/depositphotos_46528741-stock-illustration-rain-as-a-background-vector.jpg",
                     fit: BoxFit.fill,
@@ -39,33 +51,43 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Container(
-                height: 100,
+                height: 120,
                 width: double.maxFinite,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      width: kDefaultPadding,
+                      width: kDefaultPadding / 2,
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "N",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "98ppm",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    )
+                    ChemicalContainer(
+                      item: "PH",
+                      itemColor: Colors.white,
+                      ppm: 35,
+                      valColor: Colors.white,
+                      bg: kPrimaryTextColor,
+                    ),
+                    const SizedBox(
+                      width: kDefaultPadding / 2,
+                    ),
+                    ChemicalContainer(
+                      item: "N",
+                      itemColor: Colors.blue,
+                      ppm: 98,
+                    ),
+                    const SizedBox(
+                      width: kDefaultPadding / 2,
+                    ),
+                    ChemicalContainer(
+                      item: "P",
+                      itemColor: Colors.amber.shade500,
+                      ppm: 102,
+                    ),
+                    const SizedBox(width: kDefaultPadding / 2),
+                    ChemicalContainer(
+                      item: "K",
+                      itemColor: Colors.blueGrey.shade500,
+                      ppm: 35,
+                    ),
                   ],
                 ),
               )
@@ -105,5 +127,64 @@ class _HomePageState extends State<HomePage> {
         ]),
       ),
     ));
+  }
+}
+
+class ChemicalContainer extends StatelessWidget {
+  const ChemicalContainer({
+    Key? key,
+    required this.item,
+    required this.ppm,
+    required this.itemColor,
+    this.bg = kItemContainerBg,
+    this.valColor = kPrimaryTextColor,
+  }) : super(key: key);
+  final String item;
+  final double ppm;
+  final Color itemColor;
+  final Color bg;
+  final Color valColor;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 70,
+      width: 70,
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            item,
+            style: TextStyle(
+              fontSize: 20,
+              color: itemColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "$ppm",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: valColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              // Text(
+              //   "ppm",
+              //   style: TextStyle(
+              //     fontSize: 12,
+              //   ),
+              // ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
