@@ -1,7 +1,9 @@
 import 'package:farmer_app/view/constants/constats.dart';
 import 'package:farmer_app/view/screen/add-item/add_item.dart';
+import 'package:farmer_app/view/screen/home/appbar.dart';
 import 'package:farmer_app/view/screen/home/itme_container.dart';
 import 'package:farmer_app/view/screen/item-page/item_page.dart';
+import 'package:farmer_app/view/widgets/app_drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -16,11 +18,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
+      key: _scaffoldState,
+      drawer: AppDrawer(),
+      appBar: appBarCustom(
+        prefixWidget: Center(
+          child: InkWell(
+            onTap: () {
+              _scaffoldState.currentState!.openDrawer();
+            },
+            child: Icon(
+              Icons.menu,
+              color: kPrimaryTextColor,
+              size: 22,
+            ),
+          ),
+        ),
+        title: "Welcome",
+        bgColor: kWhite,
+        widgetColor: kPrimaryTextColor,
+        suffixWidget: Icon(
+          Icons.chat_rounded,
+          color: kPrimaryTextColor,
+          size: 22,
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.to(AddItem());
