@@ -23,7 +23,64 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
-        child: Column(children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          kSizedBox,
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: SizedBox(
+                  width: double.maxFinite,
+                  height: 100,
+                  child: Image.network(
+                    "https://st.depositphotos.com/1004077/4652/v/950/depositphotos_46528741-stock-illustration-rain-as-a-background-vector.jpg",
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Container(
+                height: 100,
+                width: double.maxFinite,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      width: kDefaultPadding,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "N",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "98ppm",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+          kSizedBox,
+          Text(
+            "Items for sale",
+            style: TextStyle(
+              color: kPrimaryTextColor,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          kSizedBox,
           Expanded(
             child: GridView.count(
               crossAxisCount: 2,
