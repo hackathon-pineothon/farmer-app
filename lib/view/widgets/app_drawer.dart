@@ -2,6 +2,8 @@ import 'package:farmer_app/view/constants/constats.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../screen/find-friends/find_friends.dart';
+
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
 
@@ -18,7 +20,7 @@ class AppDrawer extends StatelessWidget {
         children: [
           ListTile(
             onTap: () {
-              // Get.to(FindFriends());
+              Get.to(FindFriends());
             },
             leading: Icon(
               Icons.search,
