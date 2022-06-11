@@ -171,7 +171,13 @@ class UserApi {
         desiredAccuracy: LocationAccuracy.high);
     List<Map<String, dynamic>> choices = [];
     for (int i = 0; i < preferedCrops.length; i++) {
-      choices.add({"label": preferedCrops[i], "code": "FRM$i"});
+      if (preferedCrops[i] == "tomato" ||
+          preferedCrops[i] == "rice" ||
+          preferedCrops[i] == "banana") ;
+      choices.add({
+        "label": preferedCrops[i].capitalizeFirst,
+        "code": preferedCrops[i].substring(0, 2).toUpperCase()
+      });
     }
     Map<String, dynamic> body = {
       "name": name,
@@ -259,7 +265,7 @@ class UserApi {
 
   static Future<List<UserSimplify>> getNearbyUsers(String km) async {
     String url =
-        "http://app.geekstudios.tech/user/v1/profile/get/nearby-users/$km";
+        "https://app.geekstudios.tech/user/v1/profile/get/nearby/farmers/50";
     final uri = Uri.parse(url);
 
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -287,6 +293,49 @@ class UserApi {
         final List a = jsonDecode(response.body)["response"]["users"];
         print(a);
         users = a.map((e) => UserSimplify.fromJson(e)).toList();
+      } else {
+        showToast(
+            context: Get.overlayContext!,
+            color: Colors.orange,
+            title: jsonDecode(response.body)["message"],
+            description: "",
+            icon: Icons.warning);
+        // return;
+      }
+    } catch (e) {
+      debugPrint("Error occured while registering $e");
+    }
+    return users;
+  }
+
+  static sendRequest({required String userId}) async {
+    String url = "https://app.geekstudios.tech/user/v1/request/sent";
+    final uri = Uri.parse(url);
+    print("request sending");
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? accessToken = pref.getString("token");
+    Map<String, dynamic> body = {"id": userId};
+    print(accessToken);
+    List<UserSimplify> users = [];
+    try {
+      http.Response response = await http.post(
+        uri,
+        body: jsonEncode(body),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $accessToken"
+        },
+      ).timeout(const Duration(seconds: 3));
+      print("status ${response.statusCode}");
+      print("------------------------");
+      print(response.body);
+      if (jsonDecode(response.body)["response_code"] == 200) {
+        showToast(
+            color: kPrimaryTextColor,
+            context: Get.overlayContext!,
+            title: jsonDecode(response.body)["message"],
+            description: "",
+            icon: Icons.check);
       } else {
         showToast(
             context: Get.overlayContext!,

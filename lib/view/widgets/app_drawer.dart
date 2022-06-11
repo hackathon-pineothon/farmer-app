@@ -1,6 +1,10 @@
 import 'package:farmer_app/view/constants/constats.dart';
+import 'package:farmer_app/view/screen/home/home.dart';
+import 'package:farmer_app/view/screen/registration/login/login_page.dart';
+import 'package:farmer_app/view/screen/registration/signup/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screen/find-friends/find_friends.dart';
 
@@ -73,8 +77,11 @@ class AppDrawer extends StatelessWidget {
               )),
           Spacer(),
           ListTile(
-              onTap: () {
-                // Get.to(const ChatScreen());
+              onTap: () async {
+                SharedPreferences preferences =
+                    await SharedPreferences.getInstance();
+                preferences.clear();
+                Get.off(MobileEntry());
               },
               title: const Text(
                 "logout",

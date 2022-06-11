@@ -1,5 +1,7 @@
 import 'package:farmer_app/api/user_api.dart';
+import 'package:farmer_app/view/constants/constats.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
@@ -13,6 +15,8 @@ class NearByFriends extends StatefulWidget {
 class _NearByFriendsState extends State<NearByFriends> {
   List<UserSimplify> users = [];
   bool connected = false;
+  List<bool> selectedList = [];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -47,20 +51,22 @@ class _NearByFriendsState extends State<NearByFriends> {
                           ),
                       itemCount: users.length,
                       itemBuilder: ((context, index) {
-                        return _card(users[index]);
+                        selectedList.add(false);
+                        return _card(users[index], index);
                       })),
                 )
-              : LottieBuilder.asset(
-                  "assets/lotties/wave.json",
-                  height: 200,
-                  width: 200,
+              : Center(
+                  child: SpinKitCircle(
+                    size: 100,
+                    color: kWhite,
+                  ),
                 )
         ],
       ),
     );
   }
 
-  Widget _card(UserSimplify user) {
+  Widget _card(UserSimplify user, int index) {
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(
@@ -92,7 +98,22 @@ class _NearByFriendsState extends State<NearByFriends> {
                 decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(5))),
-                child: const Icon(Icons.add),
+                child: InkWell(
+                    onTap: () {
+                      if (!selectedList[index]) {
+                        print("user_id ${user.id}");
+                        UserApi.sendRequest(userId: user.id);
+                        setState(() {
+                          selectedList[index] = true;
+                        });
+                      }
+                    },
+                    child: selectedList[index]
+                        ? Icon(
+                            Icons.check,
+                            color: Colors.blue,
+                          )
+                        : Icon(Icons.add)),
               ),
             ),
           ],
